@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "mouserate-framerate",
+  "version": "${version}",
+  "name": "Mouserate Framerate",
+  "description": "Limits game framerate if activity has ceased for a configurable amount of time.",
+  "authors": [
+    "Pure Paradox/Abstruse Paradox/Abstrusle"
+  ],
+  "contact": {},
+  "license": "CC0-1.0",
+  "icon": "assets/mouserate-framerate/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.puradox.mouserateframerate.MouserateFramerateClient"
+    ],
+    "main": [
+      "com.puradox.mouserateframerate.MouserateFramerate"
+    ]
+  },
+  "mixins": [
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "fabric": "*",
+    "minecraft": "1.18.2"
+  }
+}
