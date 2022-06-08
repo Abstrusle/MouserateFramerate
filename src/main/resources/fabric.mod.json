@@ -7,7 +7,11 @@
   "authors": [
     "Pure Paradox/Abstruse Paradox/Abstrusle"
   ],
-  "contact": {},
+  "contact": {
+    "homepage": "https://modrinth.com/mod/mouserate-framerate",
+    "sources": "https://github.com/Abstrusle/MouserateFramerate",
+    "issues": "https://github.com/Abstrusle/MouserateFramerate/issues"
+  },
   "license": "CC0-1.0",
   "icon": "assets/mouserate-framerate/icon.png",
   "environment": "client",
@@ -15,8 +19,8 @@
     "client": [
       "com.puradox.mouserateframerate.MouserateFramerateClient"
     ],
-    "main": [
-      "com.puradox.mouserateframerate.MouserateFramerate"
+    "modmenu": [
+      "com.puradox.mouserateframerate.config.ModMenuIntegration"
     ]
   },
   "mixins": [
@@ -24,7 +28,6 @@
   "depends": {
     "fabricloader": ">=0.14.6",
     "fabric": "*",
-    "minecraft": ">=1.17",
-    "cloth-config": ">=6.2.2"
+    "minecraft": ">=1.17"
   }
 }

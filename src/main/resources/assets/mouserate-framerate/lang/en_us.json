@@ -1,0 +1,6 @@
+{
+  "text.mouserate-framerate.config.title": "MouserateFramerate Configuration",
+
+  "text.mouserate-framerate.config.ticks_until_frame_drop": "Ticks until frame drop (~20 per second)",
+  "text.mouserate-framerate.config.frame_drop_maximum_frames": "Maximum frames while idle"
+}
