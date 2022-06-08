@@ -37,7 +37,7 @@ public class MouserateFramerateClient implements ClientModInitializer {
                     if(Option.FRAMERATE_LIMIT.get(client.options)!=defaultFPS.get() && Option.FRAMERATE_LIMIT.get(client.options)!=config.frameDropMaximumFrames) {
                         defaultFPS.set(Option.FRAMERATE_LIMIT.get(client.options));
                     }
-                    if (client.player.hurtTime > 0 || client.player.input.getMovementInput().length()>0 || client.mouse.getX()!=prevMouseX || client.mouse.getY()!=prevMouseY) {
+                    if (client.player.input.jumping || client.player.hurtTime > 0 || client.player.input.getMovementInput().length()>0 || client.mouse.getX()!=prevMouseX || client.mouse.getY()!=prevMouseY) {
                         prevMouseX=client.mouse.getX();
                         prevMouseY=client.mouse.getY();
                         ticksSinceAction = 0;
