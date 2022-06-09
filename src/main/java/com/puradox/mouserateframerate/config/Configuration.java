@@ -10,7 +10,12 @@ import java.nio.charset.StandardCharsets;
 public class Configuration {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     public int ticksUntilFrameDrop = 600; //Defaulted to thirty seconds.
-    public int frameDropMaximumFrames = 10;
+    public int frameDropMaximumFrames = 10; //Must be an interval of 10.
+
+    public boolean useMouseActivity = true;
+    public boolean useMovementActivity = true;
+    public boolean useHurtActivity = true;
+    public boolean useHandSwingActivity = false;
     public static Configuration loadConfig(File file) {
         Configuration config;
 

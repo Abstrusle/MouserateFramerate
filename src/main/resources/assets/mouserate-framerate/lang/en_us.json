@@ -1,6 +1,28 @@
 {
-  "text.mouserate-framerate.config.title": "MouserateFramerate Configuration",
+  "title.mouserate-framerate.config": "MouserateFramerate Configuration",
 
-  "text.mouserate-framerate.config.ticks_until_frame_drop": "Ticks until frame drop (~20 per second)",
-  "text.mouserate-framerate.config.frame_drop_maximum_frames": "Maximum frames while idle"
+
+
+  "category.mouserate-framerate.main": "Main",
+
+  "option.mouserate-framerate.frame_drop_maximum_frames": "Maximum frames while idle",
+  "option.mouserate-framerate.frame_drop_maximum_frames.tooltip": "Accepts only intervals of 10",
+
+  "option.mouserate-framerate.ticks_until_frame_drop": "Ticks until frame drop",
+  "option.mouserate-framerate.ticks_until_frame_drop.tooltip": "Ticks occur at a rate of ~20 per second",
+
+
+  "category.mouserate-framerate.activities": "Conditions",
+
+  "option.mouserate-framerate.use_mouse_activity": "Mouse movement",
+  "option.mouserate-framerate.use_mouse_activity.tooltip": "Resets the tick timer upon moving your mouse within the screen",
+
+  "option.mouserate-framerate.use_movement_activity": "Player movement",
+  "option.mouserate-framerate.use_movement_activity.tooltip": "Resets the tick timer upon *voluntarily* moving your character along the X,Y, and Z axis",
+
+  "option.mouserate-framerate.use_hurt_activity": "Player injured",
+  "option.mouserate-framerate.use_hurt_activity.tooltip": "Resets the tick timer upon being hurt",
+
+  "option.mouserate-framerate.use_hand_swing_activity": "Hand swing",
+  "option.mouserate-framerate.use_hand_swing_activity.tooltip": "Resets the tick timer upon most item use and hand-swing actions"
 }

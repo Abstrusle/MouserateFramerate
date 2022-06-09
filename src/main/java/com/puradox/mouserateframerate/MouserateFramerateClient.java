@@ -7,11 +7,13 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.option.Option;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.GameOptions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Environment(EnvType.CLIENT)
@@ -27,25 +29,30 @@ public class MouserateFramerateClient implements ClientModInitializer {
     public void onInitializeClient() {
         config = Configuration.loadConfig(new File(FabricLoader.getInstance().getConfigDir().toFile(), "mouserate-framerate.json"));
         ClientLifecycleEvents.CLIENT_STARTED.register(client -> { //For attaining the original FPS.
-            AtomicReference<Double> defaultFPS = new AtomicReference<>(Option.FRAMERATE_LIMIT.get(client.options));
+            GameOptions options = MinecraftClient.getInstance().options;
+            AtomicReference<Integer> defaultFPS = new AtomicReference<>(options.getMaxFps().getValue());
+            int roundedFrames = (int) Math.floor(((double)config.frameDropMaximumFrames)/10)*10;
             ClientLifecycleEvents.CLIENT_STOPPING.register(client1 -> { //Reset framerate to original value on game close.
                 ticksSinceAction=0;
-                Option.FRAMERATE_LIMIT.set(client.options, defaultFPS.get());
+                options.getMaxFps().setValue(defaultFPS.get());
             });
             ClientTickEvents.END_CLIENT_TICK.register(client1 -> { //Every tick
                 if (client.player!=null) {
-                    if(Option.FRAMERATE_LIMIT.get(client.options)!=defaultFPS.get() && Option.FRAMERATE_LIMIT.get(client.options)!=config.frameDropMaximumFrames) {
-                        defaultFPS.set(Option.FRAMERATE_LIMIT.get(client.options));
+                    if(!Objects.equals(options.getMaxFps().getValue(), defaultFPS.get()) && (options.getMaxFps().getValue()!=roundedFrames)) {
+                        defaultFPS.set(options.getMaxFps().getValue());
                     }
-                    if (client.player.input.jumping || client.player.hurtTime > 0 || client.player.input.getMovementInput().length()>0 || client.mouse.getX()!=prevMouseX || client.mouse.getY()!=prevMouseY) {
+                    if (((config.useMouseActivity) && (client.mouse.getX()!=prevMouseX || client.mouse.getY()!=prevMouseY))
+                            || ((config.useMovementActivity) && (client.player.input.getMovementInput().length()>0 || client.player.input.jumping || client.player.isDescending()))
+                            || ((config.useHurtActivity) && (client.player.hurtTime > 0))
+                            || ((config.useHandSwingActivity) && (client.player.handSwinging || client.player.isUsingItem()))) {
                         prevMouseX=client.mouse.getX();
                         prevMouseY=client.mouse.getY();
                         ticksSinceAction = 0;
-                        Option.FRAMERATE_LIMIT.set(client.options, defaultFPS.get());
+                        options.getMaxFps().setValue(defaultFPS.get());
                     } else if (ticksSinceAction<config.ticksUntilFrameDrop) {
                         ticksSinceAction++;
                     } else {
-                        Option.FRAMERATE_LIMIT.set(client.options, config.frameDropMaximumFrames);
+                        options.getMaxFps().setValue(config.frameDropMaximumFrames);
                     }
                 }
             });
@@ -55,5 +62,9 @@ public class MouserateFramerateClient implements ClientModInitializer {
 
     public static void saveConfig () {
         config.saveConfig(new File(FabricLoader.getInstance().getConfigDir().toFile(), "mouserate-framerate.json"));
+    }
+
+    public static Configuration getConfig() {
+        return config;
     }
 }
