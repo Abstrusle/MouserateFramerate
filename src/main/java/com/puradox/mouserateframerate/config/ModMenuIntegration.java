@@ -26,13 +26,13 @@ public class ModMenuIntegration implements ModMenuApi {
 
             main.addEntry(entryBuilder.startIntField(Text.translatable("option.mouserate-framerate.frame_drop_maximum_frames"),
                             config.frameDropMaximumFrames)
-                    .setDefaultValue(20)
+                    .setDefaultValue(10)
                     .setTooltip(Text.translatable("option.mouserate-framerate.frame_drop_maximum_frames.tooltip"))
                     .setSaveConsumer(newValue -> config.frameDropMaximumFrames = (int) Math.floor(((double)newValue)/10)*10)
                     .build());
             main.addEntry(entryBuilder.startIntField(Text.translatable("option.mouserate-framerate.ticks_until_frame_drop"),
                             config.ticksUntilFrameDrop)
-                    .setDefaultValue(300)
+                    .setDefaultValue(600)
                     .setTooltip(Text.translatable("option.mouserate-framerate.ticks_until_frame_drop.tooltip"))
                     .setSaveConsumer(newValue -> config.ticksUntilFrameDrop = newValue)
                     .build());
